@@ -1,0 +1,58 @@
+<apex:page controller="calculateWorkingDaysBetweenTwoDates" sidebar="false" showHeader="false">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+                $(document).ready(function() {
+                $('#tbName').on('input change', function() {
+                    if($(this).val() != '') {
+                        $('#submit').prop('disabled', false);
+                    } else {
+                        $('#submit').prop('disabled', true);
+                    }
+                });
+            });
+    </script>
+    <style type="text/css">
+        .wrong { font-style: italic;
+                    Color:#FF0000;
+        			font-weight: bold;}
+        .right { font-style: italic;
+                    color:green;
+        			font-weight: bold;}
+    </style>
+    <apex:form >
+        <apex:pageblock >
+            Input your Southafrica Id =>&nbsp;&nbsp;&nbsp; <apex:inputText value="{!southafricaId}" id="tbName" rendered="true"/>
+            <apex:commandButton value="Search"  id="submit"  reRender="DisplayInputQueryID,DisplayInputQueryIDs,Data,HolidayData" action="{!SouthAfricaId}"/>
+        </apex:pageblock><!--disabled="true"  disabled="{!hidebutton}"  onkeyup="enableButton();"-->
+        <apex:pageblock >
+            
+            <apex:outputPanel >
+                <b>Output : </b><apex:outputText value="{!myoutputString}" id="DisplayInputQueryID"/>
+            </apex:outputPanel><br/><br/>
+            <!--<apex:outputPanel rendered="{!!right}">rendered="{!right}"{!right}
+                <b>Output : </b><apex:outputText styleClass="wrong" value="{!myoutputString}" id="DisplayInputQueryIDs"/>
+            </apex:outputPanel><br/><br/>-->
+            
+        </apex:pageblock>
+    </apex:form>
+    <apex:form id="Data">
+        <apex:pageBlock rendered="true">
+            
+            <b>Date of Birth : </b>&nbsp;&nbsp;&nbsp;{!DateOfBirths}<br/>
+            <b>Gender :</b> &nbsp;&nbsp;&nbsp;{!Gender}<br/>
+            <b>South Africa Citizen : </b>&nbsp;&nbsp;&nbsp;{!SAcitizen}<br/>
+            <b>South Africa Id Validity : </b>&nbsp;&nbsp;&nbsp;{!ValidId}<br/>
+            <b>South Africa Id Count Search : </b>&nbsp;&nbsp;&nbsp;{!CountSearch}<br/>
+        </apex:pageBlock>
+    </apex:form>
+    
+    <apex:form id="HolidayData">
+        <apex:pageBlock rendered="true" >
+            <apex:pageBlockTable value="{!HolidayList}" var="holi">
+               <apex:column headerValue="Public holiday" value="{!holi}"/>
+            </apex:pageBlockTable>
+            
+        </apex:pageBlock>
+        
+    </apex:form>
+</apex:page>
